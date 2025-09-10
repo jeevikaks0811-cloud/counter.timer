@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Countdown Timer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    input, button {
+      padding: 10px;
+      margin: 5px;
+      font-size: 1em;
+    }
+    #display {
+      font-size: 2em;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h2>⏳ Countdown Timer</h2>
+  
+  <input type="number" id="minutes" value="1" min="1"> Minutes
+  <br><br>
+  <button onclick="startTimer()">Start</button>
+  <button onclick="resetTimer()">Reset</button>
+
+  <div id="display">00:00</div>
+
+  <script>
+    let timer; 
+    let timeRemaining;
+
+    function startTimer() {
+      let minutes = document.getElementById("minutes").value;
+      timeRemaining = minutes * 60; // convert to seconds
+
+      clearInterval(timer); // stop previous intervals
+      timer = setInterval(updateTimer, 1000);
+    }
+
+    function updateTimer() {
+      let minutes = Math.floor(timeRemaining / 60);
+      let seconds = timeRemaining % 60;
+
+      document.getElementById("display").innerHTML = 
+        (minutes < 10 ? "0" : "") + minutes + ":" + 
+        (seconds < 10 ? "0" : "") + seconds;
+
+      if (timeRemaining <= 0) {
+        clearInterval(timer);
+        alert("⏰ Time's up!");
+      } else {
+        timeRemaining--;
+      }
+    }
+
+    function resetTimer() {
+      clearInterval(timer);
+      document.getElementById("display").innerHTML = "00:00";
+    }
+  </script>
+</body>
+</html>
